@@ -1,52 +1,10 @@
-Overview
---------
+lua-term
+========
 
-lua-term is a Lua module for manipulating a terminal.
+`lua-term` is a Lua module for manipulating a terminal.
 
-Installation
-------------
-
-lua-term is available on Luarocks.
-
-
-## OpenBSD
-
-lua-term is available as an OpenBSD package. Use the proper Lua flavour to
-get the package for your Lua version:
-
-```
-# For Lua 5.1
-$ doas pkg_add -r lua-term
-# For Lua 5.2
-$ doas pkg_add -r lua52-term
-# For Lua 5.3
-$ doas pkg_add -r lua53-term
-```
-
-Or install from ports:
-
-```
-$ cd /usr/ports/devel/lua-term
-$ env FLAVOR=lua51 doas make install
-```
-
-## openSUSE
-lua-term is available in the `devel:languages:lua` devel project on [OBS](https://build.opensuse.org/package/show/devel:languages:lua/lua-luaterm).
-
-Add the repository and install lua-term via:
-```
-zypper addrepo http://download.opensuse.org/repositories/devel:/languages:/lua/openSUSE_Tumbleweed/devel:languages:lua.repo
-zypper refresh
-zypper in lua-luaterm
-```
-
-Adjust the repository URL to your version of openSUSE by substituting `openSUSE_Tumbleweed` with your actual version eg `opensSUSE_42.2`.
-
-## Windows
-
-lua-term works on Windows as well when virtual terminal processing is enabled. To have this enabled automatically ensure that
-[LuaSystem](https://github.com/lunarmodules/luasystem) is installed (version 0.4.0 or newer). If found, that module will be used
-to enable virtual terminal processing and to switch output to utf-8.
+lua-term works on Windows when virtual terminal processing is enabled. To have this enabled automatically ensure that [LuaSystem](https://github.com/lunarmodules/luasystem) is installed (version 0.4.0 or newer). If found, that module will be used
+to enable virtual terminal processing and to switch output to UTF-8.
 
 Usage
 -----
@@ -83,15 +41,15 @@ Usage
 Some functions in lua-term take an optional file handle argument; if this is
 not provided, `io.stdout` is used.
 
-### `term.clear([opt_file])`
+`term.clear([opt_file])`
 
 Clear the terminal's contents.
 
-### `term.cleareol([opt_file])`
+`term.cleareol([opt_file])`
 
 Clear from the current cursor position to the end of the current line.
 
-### `term.isatty(file)`
+`term.isatty(file)`
 
 Returns `true` if `file` is a TTY; `false` otherwise.
 
@@ -156,41 +114,35 @@ print(colors.red, 'hello', colors.reset)
 `term.cursor` Functions
 ---------------------
 
-### `term.cursor.goto([opt_file], x, y)`
+`term.cursor.goto([opt_file], x, y)`
 
 Place the cursor at (`x`, `y`).
 
-### `term.cursor.jump([opt_file], x, y)`
+`term.cursor.jump([opt_file], x, y)`
 
 An alias for `term.cursor.goto`.
 
-### `term.cursor.goup([opt_file], nlines)`
+`term.cursor.goup([opt_file], nlines)`
 
 Moves the cursor up `nlines` lines.
 
-### `term.cursor.godown([opt_file], nlines)`
+`term.cursor.godown([opt_file], nlines)`
 
 Moves the cursor down `nlines` lines.
 
-### `term.cursor.goright([opt_file], ncols)`
+`term.cursor.goright([opt_file], ncols)`
 
 Moves the cursor right `ncols` columns.
 
-### `term.cursor.goleft([opt_file], ncols)`
+`term.cursor.goleft([opt_file], ncols)`
 
 Moves the cursor left `ncols` columns.
 
-### `term.cursor.save([opt_file])`
+`term.cursor.save([opt_file])`
 
 Saves the cursor position.
 
-### `term.cursor.restore([opt_file])`
+`term.cursor.restore([opt_file])`
 
 Restores the cursor position.
 
-Alternatives
-------------
-
-If you are looking to simply provide coloration to a terminal application and would
-like to use a more "tag-like" API (ex. `colors '%{red}hello%{reset}'`), there is a Lua rock
-named ansicolors: https://github.com/kikito/ansicolors.lua
