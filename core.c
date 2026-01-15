@@ -16,10 +16,12 @@ lua_isatty(lua_State *L)
     return 1;
 }
 
-int
+LUALIB_API int
 luaopen_term_core(lua_State *L)
 {
     lua_newtable(L);
+    lua_pushstring(L, "lua-term 0.8");
+    lua_setfield(L, -2, "_VERSION");
     lua_pushcfunction(L, lua_isatty);
     lua_setfield(L, -2, "isatty");
 
