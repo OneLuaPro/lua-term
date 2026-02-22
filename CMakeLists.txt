@@ -89,23 +89,23 @@ set(INSTALL_TOP_LDIR
 add_library(term SHARED)
 # setup lua include directory
 target_include_directories(term PRIVATE ${LIBLUA_INCLUDEDIR})
+# plattform-independend sources
+target_sources(term PRIVATE core.c)
 # setup platform-specific sources, compile and linker options
 if(WIN32 AND NOT MinGW)
   # Important definitions for DLL and symbol export
-  add_definitions(-DLUA_BUILD_AS_DLL -DLUA_LIB)
+  target_compile_definitions(term PRIVATE
+    LUA_BUILD_AS_DLL LUA_LIB
+    _WINDLL _WIN32 _CRT_SECURE_NO_WARNINGS
+  )
   # set deviating library output name
   set_target_properties(term PROPERTIES PREFIX "")
   set_target_properties(term PROPERTIES OUTPUT_NAME core)
-  # Compile options
-  target_compile_definitions(term PRIVATE
-    _WINDLL _WIN32 _CRT_SECURE_NO_WARNINGS)
-  # We silently assume LibreSSL is available with headers and static lib
-  target_link_options(term PRIVATE /LIBPATH:${LIBLUA_LIBDIR} liblua.lib)
+  target_link_directories(term PRIVATE ${LIBLUA_LIBDIR})
+  target_link_libraries(term PRIVATE liblua)
 else()
   message(FATAL_ERROR "Not yet fully implemented.")
 endif()
-# plattform-independend sources
-target_sources(term PRIVATE core.c)
 # Install
 install(TARGETS term RUNTIME DESTINATION ${INSTALL_TOP_CDIR}/term)
 # install lua files to defined locations

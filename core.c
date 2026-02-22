@@ -3,8 +3,15 @@
 #include <lua.h>
 #include <lauxlib.h>
 #include <lualib.h>
-#ifndef _MSC_VER
-# include <unistd.h>
+
+#ifdef _WIN32
+# include <io.h>
+# define isatty _isatty
+# define fileno _fileno
+#else
+# ifndef _MSC_VER
+#  include <unistd.h>
+# endif
 #endif
 
 static int
